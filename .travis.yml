@@ -2,6 +2,9 @@ arch:
   - ppc64le
   - amd64
 language: erlang
+before_install:
+  - if [ "$TRAVIS_ARCH" = "ppc64le" ]; then sudo apt-get update; sudo apt-get install rebar; fi
+  
 otp_release:
   - 18.2
   - 18.1
@@ -20,5 +23,5 @@ jobs:
 
 before_script:
     - "./bootstrap_travis.sh"
-    - if [ "$TRAVIS_ARCH" = "ppc64le" ]; then sudo apt-get update; sudo apt-get install rebar; fi
-script: "./rebar3 compile"
+    
+    script: "./rebar3 compile"
