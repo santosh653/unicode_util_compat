@@ -1,9 +1,24 @@
+arch:
+  - ppc64le
+  - amd64
 language: erlang
 otp_release:
   - 18.2
   - 18.1
   - 18.0
   - 19.3
+# Disable otp_release 17.1, 17.5, 18.1, 19.3 as these releases are not supported on Ubuntu16.04 for arch: ppc64le
+jobs: 
+ exclude:
+  - arch: ppc64le
+    otp_release: 18.2
+  - arch: ppc64le
+    otp_release: 18.1
+  - arch: ppc64le
+    otp_release: 19.3
+
+
 before_script:
     - "./bootstrap_travis.sh"
+    - if [ "$TRAVIS_ARCH" = "ppc64le" ]; then sudo apt-get update; sudo apt-get install rebar; fi
 script: "./rebar3 compile"
